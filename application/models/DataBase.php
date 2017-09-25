@@ -132,5 +132,36 @@
 			$user_id = $this->getUserID();
 			$this->db->query('DELETE FROM notes WHERE id = ? AND user_id = ? LIMIT 1',array($id,$user_id));
 		}
+
+
+		public function newPad()
+		{
+			if(!empty($_REQUEST['title'])){
+				$ses = $this->session->get_userdata();
+				$ar_insert = array(
+					'user_id' => $ses['user_id'],
+					'title' => $_REQUEST['title'],
+					'content' => $_REQUEST['content'],
+					);
+				$this->db->insert('pad',$ar_insert);
+				$pad_id = $this->db->insert_id();
+
+				$ar_insert = array(
+						'parent_id' => 0,
+						'user_id' => $ses['user_id'],
+						'pad_id' => $pad_id,
+						'title' => 	'Новая заметка',
+						'text' =>	"# Привет :)",
+						'datetime' => date('Y-m-d h:m:s'),
+						);
+					$this->db->insert('notes',$ar_insert);
+					$note_id = $this->db->insert_id();
+				return array('pad'=>$pad_id,'note'=>$note_id);
+			}
+
+
+		}
+
+
 	}
  ?>

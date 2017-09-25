@@ -83,6 +83,37 @@ var app_ob = {
 			init();
 		});
 		$('div.dropdown-menu').removeClass('show');
+	},
+
+	newpad: function(link){
+		$.get(link, function(data, status){
+			$("#popup").html(data);
+			$("#popup").show('400');
+			init();
+		});
+		$('div.dropdown-menu').removeClass('show');		
+	},
+
+	makenewpad: function(link){
+		var form = $('#newpadform').serialize();
+    $.ajax({
+        type: 'POST',
+        url: link,
+        data: form,
+        success: function(data) {
+					$('#popup').hide('400');
+          console.log(data);
+					getPads();
+          app_ob.getnotelist('/ajax/getnotes/');
+          	$.get('/ajax/note/', function(data, status){
+							$("#content-wrap").html(data);
+						});
+        },
+        error:  function(xhr, str){
+        	console.log('Возникла ошибка: ' + xhr.responseCode);
+        	console.log(str);
+         }
+    });	
 	}
 
 }
@@ -96,17 +127,19 @@ function getPads() {
 }
 
 
-function init(){
-	
+function init(){	
+	$('a').unbind('click', a_click); 
+	$('a').bind('click', a_click);  
 
-	$('a').click(function() {
+}
+
+
+function a_click() {
 		var action = $(this).data('action');
 		if (action == undefined) {
 			return true;
 		}
-		var link = $(this).attr('href');
+		var link = $(this).attr('href');		
 		app_ob[action](link,this);
-		return false;
-	});
-
+		return false;	
 }

@@ -11,7 +11,7 @@
 	      <h6 class="mb-1"><?=$ar_note['title']?></h6>
 	      <!-- <small><?=$ar_note['datetime']?></small> -->
 	    </div>
-	    <p class="mb-1" style="font-size: 13px;"><?=substr($ar_note['text'], 0,50)?>...</p>
+	    <!-- <p class="mb-1" style="font-size: 13px;"><?=substr($ar_note['text'], 0,50)?>...</p> -->
 	    <small style="font-size: 10px;"><?=$ar_note['datetime']?></small>
 	  </a>
 	<?php endforeach ?>

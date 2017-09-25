@@ -96,3 +96,42 @@ a.list-group-item{
 .nav-link {
 	margin-left: 10px;
 }
+
+#popup{
+	display:none;
+  position: fixed;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 400px;
+  height: 200px;
+  left: calc(50vw - 200px);
+  top: calc(50vh - 100px);
+  z-index: 100;
+  background-color: #eee;
+  padding:10px;
+}
+
+#newpadform textarea{
+	resize: none;
+	height: 86px;
+}
+
+
+table {
+    border: 1px solid #e9ecef;
+    border-collapse: collapse;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+}
+
+table td, table th {
+    border: 1px solid #e9ecef;
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid #e9ecef;
+}
+
+blockquote{
+	text-align: right;
+}

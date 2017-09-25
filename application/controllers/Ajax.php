@@ -96,8 +96,21 @@ class Ajax extends CI_Controller {
 	}
 
 	public function delete(){
-var_dump($this->session->current_note_id);
-		$this->dbs->deleteNote($this->session->current_note_id);
+			$this->dbs->deleteNote($this->session->current_note_id);
+	}
+
+	public function newpad()
+	{
+		$this->load->view('templates/new_pad');
+	}
+
+
+	public function makenewpad(){
+		$ar_id = $this->dbs->newPad();
+		if(is_numeric($ar_id['pad'])){
+			$this->session->pad_id = $ar_id['pad'];
+			$this->session->note_id = $ar_id['note'];
+		}
 	}
 
 }
