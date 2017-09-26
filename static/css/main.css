@@ -116,6 +116,12 @@ a.list-group-item{
 	height: 86px;
 }
 
+#editpadform textarea{
+	resize: none;
+	height: 86px;
+}
+
+
 
 table {
     border: 1px solid #e9ecef;
@@ -134,4 +140,92 @@ table td, table th {
 
 blockquote{
 	text-align: right;
+}
+
+.pad_trash{
+    position: absolute;
+    right: 0;
+    height: 28px;
+    background-color: #ffffff;
+    border: 1px solid #ffcece;
+    border-radius: 0 0 0 8px;
+    top: 0;
+    padding-top: 5px;
+    width: 28px;
+    vertical-align: middle;
+}
+
+.pad_trash:hover{
+    background-color: #ffcece;	
+    z-index: 500;
+}
+
+.pad_menu {
+   display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    height: 24px;
+    background-color: #ffffff;
+    border: 1px solid #d0e8ff;
+    border-radius: 0 0 0 3px;
+    top: 0;
+    /* padding-top: 5px; */
+    width: 38px;
+    vertical-align: middle;
+}
+
+.pad_menu:hover{
+	background-color: #d0e8ff;
+}
+
+.pad_menu_full {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    background-color: #ffffff;
+    top: 0;
+    /* padding-top: 5px; */
+    width: 100px;
+    vertical-align: middle;
+    overflow: hidden;
+    width: 0;
+}
+
+.pad_menu_full.active{
+    /*border: 1px solid #d0e8ff;	*/
+}
+
+
+.pad_menu_full>div {
+    font-size: 12px;
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pad_menu_full>div.change:hover{
+	background-color: green;
+}
+
+.pad_menu_full>div.del:hover{
+	background-color: red;
+}
+
+
+div.circle{
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    width: 6px;
+    height: 6px;
+    background-color: #464a4e;
+    margin-left: 1px;
+    margin-right: 1px;
 }

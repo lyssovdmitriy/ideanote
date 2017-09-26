@@ -162,6 +162,39 @@
 
 		}
 
+		public function deletePad($id){
+			$user_id = $this->getUserID();
+			$ret = $this->db->query('SELECT * FROM pad WHERE id = ? AND user_id = ? LIMIT 1',array($id,$user_id))->row_array();
+			if (is_array($ret)) {
+				$this->db->query('DELETE FROM pad WHERE id = ? LIMIT 1',array($id));
+				$this->db->query('DELETE FROM notes WHERE pad_id = ?',array($id));
+				return 'удалено';
+			}
+
+		}
+
+		public function setValidCurrentPad(){
+			$user_id = $this->getUserID();
+			$ret = $this->db->query('SELECT * FROM pad WHERE user_id = ? LIMIT 1',array($user_id))->row_array();
+			if (is_array($ret)) {
+				$this->session->pad_id = $ret['id'];
+			}
+		}
+
+		public function getPad($id){
+			$user_id = $this->getUserID();
+			$ar_pad = $this->db->query('SELECT id, title, content FROM pad WHERE id = ? AND user_id = ? LIMIT 1', array($id,$user_id))->row_array();
+			return $ar_pad;
+		}
+
+		public function savePad(){
+			if(!empty($_REQUEST['title'])){
+				$user_id = $this->getUserID();			
+				$this->db->query("UPDATE pad SET title = ?, content = ? WHERE id = ? AND user_id = ? LIMIT 1",array($_REQUEST['title'],$_REQUEST['content'],$_REQUEST['id'],$user_id));
+			}
+		}
+
+
 
 	}
  ?>

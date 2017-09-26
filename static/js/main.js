@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 	$.get('/ajax/note/', function(data, status){
 		$("#content-wrap").html(data);
 	});
-	getPads();
+	// getPads();
 	init();	
 	app_ob.getnotelist('/ajax/getnotes/1');
 });			
@@ -46,7 +46,6 @@ var app_ob = {
         data: form,
         success: function(data) {
           $("#content-wrap").html(data);
-          app_ob.getnotelist('/ajax/getnotes/');
         },
         error:  function(xhr, str){
 	   			alert('Возникла ошибка: ' + xhr.responseCode);
@@ -80,6 +79,7 @@ var app_ob = {
 	getnotelist: function(link){
 		$.get(link, function(data, status){
 			$("#notes-tree").html(data);
+			getCurNote();
 			init();
 		});
 		$('div.dropdown-menu').removeClass('show');
@@ -93,6 +93,8 @@ var app_ob = {
 		});
 		$('div.dropdown-menu').removeClass('show');		
 	},
+
+
 
 	makenewpad: function(link){
 		var form = $('#newpadform').serialize();
@@ -114,14 +116,34 @@ var app_ob = {
         	console.log(str);
          }
     });	
+	},
+
+	savepad: function(){
+		var form = $('#editpadform').serialize();
+    $.ajax({
+        type: 'POST',
+        url: '/ajax/savepad',
+        data: form,
+        success: function(data) {
+					$('#popup').hide('400');
+          console.log(data);
+					getPads();
+        },
+        error:  function(xhr, str){
+        	console.log('Возникла ошибка: ' + xhr.responseCode);
+        	console.log(str);
+         }
+    });	
 	}
+
+
 
 }
 
 
 function getPads() {
 	$.get('/ajax/getpads', function(data, status){
-		$("#pad-menu").html(data);
+		$("#notes-tree").html(data);
 		init();
 	});
 }
@@ -129,8 +151,12 @@ function getPads() {
 
 function init(){	
 	$('a').unbind('click', a_click); 
-	$('a').bind('click', a_click);  
+	$('a').bind('click', a_click); 
 
+	$('.pad_menu').click(function(event) {
+		padChangeMenuOpen(this);
+		event.stopPropagation();
+	});
 }
 
 
@@ -142,4 +168,58 @@ function a_click() {
 		var link = $(this).attr('href');		
 		app_ob[action](link,this);
 		return false;	
+}
+
+function getCurNote(){
+	$.get('/ajax/note/', function(data, status){
+		$("#content-wrap").html(data).show('400');
+	});
+}
+
+function delPad(data){
+	var title = data.title;
+	var id = data.id;
+	var ret = confirm('Вы действительно хотите удалить блокнот "'+title+'"?');
+	if (ret) {
+		$.get('/ajax/deletepad/'+id, function(data, status){
+			console.log(data);
+			getPads();
+			getCurNote();
+		});
+	}
+	return false;
+}
+
+function padChangeMenuOpen(ob){
+	var data = $(ob).data();
+	$(ob).hide('400');
+	$('#pmf_'+data.id).animate({	'width': '100px'},'400').addClass('active');
+
+	$('#pmf_'+data.id+'>.change').unbind('click');
+	$('#pmf_'+data.id+'>.change').click(function(e) {
+		e.stopPropagation();
+		$('#pmf_'+data.id).animate({	'width': '0px'},'400').removeClass('active');
+		$(ob).show('400');
+		editpad(data.id);
+		return false;
+	});
+
+
+	$('#pmf_'+data.id+'>.del').unbind('click');
+	$('#pmf_'+data.id+'>.del').click(function(e) {
+		e.stopPropagation();
+		$('#pmf_'+data.id).animate({	'width': '0px'},'400').removeClass('active');
+		$(ob).show('400');
+		delPad(data);
+		return false;
+	});
+}
+
+
+function editpad(id){
+	$.get('/ajax/editpad/'+id, function(data, status){
+		$("#popup").html(data);
+		$("#popup").show('400');
+		init();
+	});
 }
