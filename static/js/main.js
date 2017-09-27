@@ -62,6 +62,7 @@ var app_ob = {
 		$(ob).addClass('active');
 		$.get(link, function(data, status){
 			$("#content-wrap").html(data);
+			target_blank();
 		});
 		this.update_btn();
 	},
@@ -171,6 +172,7 @@ function a_click() {
 function getCurNote(){
 	$.get('/ajax/note/', function(data, status){
 		$("#content-wrap").html(data).show('400');
+		target_blank();
 	});
 }
 
@@ -227,4 +229,9 @@ function editpad(id){
 		$("#popup").show('400');
 		init();
 	});
+}
+
+
+function target_blank() {
+	$("#content-wrap a").attr('target', '_blank');
 }
