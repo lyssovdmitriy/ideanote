@@ -4,6 +4,8 @@
 	*/
 	class DataBase extends CI_Model
 	{
+
+		private $ACCESS_ADMIN = 1;
 		
 		function __construct(){
 			parent::__construct();
@@ -246,7 +248,48 @@
 		}
 
 
+		public function getUser()
+		{
+			$user_id = $this->getUserID();
+			return $this->db->query('SELECT * FROM user WHERE id = ?', array($user_id))->row_array();
+		}
 
+		public function isAdmin()
+		{
+			$user = $this->getUser();
+			if ($user['access'] == $this->ACCESS_ADMIN) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		public function getUsers()
+		{
+			return $this->db->query('SELECT * FROM user')->result_array();
+		}
+
+
+		public function getPadsByUserID($user_id)
+		{
+			if ($user_id) {
+				$ar_pads = $this->db->query("SELECT * FROM pad WHERE user_id = ?", array($user_id))->result_array();
+				if (is_array($ar_pads)) {
+					return $ar_pads;
+				}
+			}
+			return false;
+		}
+
+
+		public function getNotesByPadID($pad_id)
+		{
+			return $ar_notes = $this->db->query("SELECT * FROM notes WHERE pad_id = ? ", array($pad_id))->result_array();
+		}
+
+		public function getNoteByID($note_id){
+			return $ar_notes = $this->db->query("SELECT * FROM notes WHERE id = ? ", array($note_id))->row_array();			
+		}
 
 	}
  ?>
