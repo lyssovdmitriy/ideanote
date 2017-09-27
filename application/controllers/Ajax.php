@@ -43,7 +43,7 @@ class Ajax extends CI_Controller {
 			$this->session->current_note_id = $id;
 		} 
 		if(!isset($this->session->current_note_id)){
-			$id = $this->dbs->getLastNote();
+			$this->session->current_note_id = $this->dbs->getLastNote();
 		}
 		$ret = $this->dbs->getNote($this->session->current_note_id);
 		if ($ret) {		
@@ -78,15 +78,18 @@ class Ajax extends CI_Controller {
 
 
 	public function getpads(){
+		$data['pads'] = array();
 		if ($ar_pad = $this->dbs->getPads()) {
 			$data['pads'] = $ar_pad;
 			$data['cur_pad_id'] = $this->session->pad_id;
-			$this->load->view('templates/pad_menu',$data);
 		}
+		$this->load->view('templates/pad_menu',$data);
 	}
 
 	public function getnotes($id = false){
+		$b_set_note_id = true;
 		if(!$id){
+			$b_set_note_id = false;
 			$id = $this->session->pad_id;
 		}
 		$ar_notes = $this->dbs->getNotes($id);
@@ -96,7 +99,11 @@ class Ajax extends CI_Controller {
 			$ar_notes = $this->dbs->getNotes($id);
 		}
 		$this->session->pad_id = $id;
-		$this->session->current_note_id = $ar_notes[0]['id'];
+		if($b_set_note_id){
+			if(is_array($ar_notes)&&!empty($ar_notes)){
+				$this->session->current_note_id = $ar_notes[0]['id'];
+			}
+		}
 		$data['notes'] = $ar_notes;
 		$data['cur_note_id'] = $this->session->current_note_id;
 		$this->load->view('templates/notes_menu',$data);

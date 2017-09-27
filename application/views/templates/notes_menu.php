@@ -1,4 +1,13 @@
 <div class="list-group">
+	<a
+		href="/ajax/editor/new" 
+  	id="new-btn" 
+  	data-action="edit" 
+	  class="list-group-item list-group-item-action flex-column align-items-start" onclick='return false;' >
+		 <div class="d-flex w-100 justify-content-between">
+	      <h6 class="mb-1">Новая заметка...</h6>
+	    </div>
+	</a>
 	<?php foreach ($notes as $ar_note): ?>
 		<?php if ($ar_note['id'] == $cur_note_id){
 			$active = 'active';

@@ -1,10 +1,10 @@
 jQuery(document).ready(function($) {
-	$.get('/ajax/note/', function(data, status){
-		$("#content-wrap").html(data);
-	});
-	// getPads();
+	// $.get('/ajax/note/', function(data, status){
+	// 	$("#content-wrap").html(data);
+	// });
+	getPads();
 	init();	
-	app_ob.getnotelist('/ajax/getnotes/1');
+	// app_ob.getnotelist('/ajax/getnotes');
 });			
 
 var app_ob = {
@@ -14,9 +14,7 @@ var app_ob = {
 	new_btn: '#new-btn',
 	del_btn: '#del-btn',
 	cancel: function(link,ob){
-		$.get(link, function(data, status){
-			$("#content-wrap").html(data);
-		});
+		getCurNote();
 		this.update_btn();
 	},
 	edit: function(link,ob){
@@ -33,7 +31,6 @@ var app_ob = {
 			});
 		});
 		$(this.edit_btn).hide();
-		$(this.new_btn).hide();
 		$(this.del_btn).hide();
 		$(this.save_btn).show();
 		$(this.cancel_btn).show();
@@ -46,6 +43,7 @@ var app_ob = {
         data: form,
         success: function(data) {
           $("#content-wrap").html(data);
+          getCurNoteList();
         },
         error:  function(xhr, str){
 	   			alert('Возникла ошибка: ' + xhr.responseCode);
@@ -173,6 +171,13 @@ function a_click() {
 function getCurNote(){
 	$.get('/ajax/note/', function(data, status){
 		$("#content-wrap").html(data).show('400');
+	});
+}
+
+function getCurNoteList(){
+	$.get('/ajax/getnotes', function(data, status){
+		$("#notes-tree").html(data);
+		init();
 	});
 }
 

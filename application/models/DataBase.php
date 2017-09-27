@@ -26,7 +26,7 @@
 			}
 		}
 
-		private function getLastNote()
+		public function getLastNote()
 		{
 			$user_id = $this->session->user_id;
 			$ret_ar = $this->db->query('SELECT * FROM last_note WHERE user_id = ? LIMIT 1',array($user_id))->row_array();
@@ -150,8 +150,8 @@
 						'parent_id' => 0,
 						'user_id' => $ses['user_id'],
 						'pad_id' => $pad_id,
-						'title' => 	'Новая заметка',
-						'text' =>	"# Привет :)",
+						'title' => 	'Заметка',
+						'text' =>	"## Привет :)",
 						'datetime' => date('Y-m-d h:m:s'),
 						);
 					$this->db->insert('notes',$ar_insert);
@@ -164,11 +164,16 @@
 
 		public function deletePad($id){
 			$user_id = $this->getUserID();
-			$ret = $this->db->query('SELECT * FROM pad WHERE id = ? AND user_id = ? LIMIT 1',array($id,$user_id))->row_array();
-			if (is_array($ret)) {
-				$this->db->query('DELETE FROM pad WHERE id = ? LIMIT 1',array($id));
-				$this->db->query('DELETE FROM notes WHERE pad_id = ?',array($id));
-				return 'удалено';
+			$count = $this->db->query('SELECT COUNT(id) as count FROM pad WHERE user_id = ?',array($user_id))->row_array();
+			if ($count['count']>1) {
+				$ret = $this->db->query('SELECT * FROM pad WHERE id = ? AND user_id = ? LIMIT 1',array($id,$user_id))->row_array();
+				if (is_array($ret)) {
+					$this->db->query('DELETE FROM pad WHERE id = ? LIMIT 1',array($id));
+					$this->db->query('DELETE FROM notes WHERE pad_id = ?',array($id));
+					return 'удалено';
+				}
+			} else {
+				echo "последний блокнот нельзя удалить";
 			}
 
 		}
@@ -193,6 +198,53 @@
 				$this->db->query("UPDATE pad SET title = ?, content = ? WHERE id = ? AND user_id = ? LIMIT 1",array($_REQUEST['title'],$_REQUEST['content'],$_REQUEST['id'],$user_id));
 			}
 		}
+
+		public function validLogin($login){
+			$ret = $this->db->query("SELECT login FROM user WHERE login = ? LIMIT 1",array($login))->row_array();
+			if (is_array($ret)) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+
+		public function newUser()
+		{
+			if (empty($_POST)) {
+				return false;
+			}
+
+			$ar_insert = array(
+				'login' => $_POST['login'],
+				'password' => md5($_POST['password']),
+				);
+			if ($this->db->insert('user',$ar_insert)) {
+				$user_id = $this->db->insert_id();
+				$ar_insert = array(
+					'user_id' => $user_id,
+					'title' => 'Блокнот',
+					'content' => 'Создан при регистрации',
+					 );
+				$this->db->insert('pad',$ar_insert);
+				$pad_id = $this->db->insert_id();
+				$ar_insert = array(
+					'user_id' => $user_id, 
+					'pad_id' => $pad_id,
+					'parent_id' => 0,
+					'title' => 	'Заметка',
+					'text' =>	"## Привет :)",
+					'datetime' => date('Y-m-d h:m:s'),
+					);
+				$this->db->insert('notes',$ar_insert);
+				$note_id = $this->db->insert_id();
+				$this->db->insert('last_note',array('user_id'=>$user_id,'note_id'=>$note_id));
+			} else {
+				return false;
+			}
+			return true;
+		}
+
 
 
 

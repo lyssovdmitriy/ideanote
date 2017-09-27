@@ -22,7 +22,7 @@
 </div>
 	<div class="wrap-login">
 		<div class="container-login">
-		<h5>Регистрация</h5>
+		<!-- <h5 style="color: dimgray;">Регистрация</h5> -->
 			<form action="/login/registration_do" class="form-horizontal" method="POST">
 				<div class="form-group">
 					<input type="text" name="login" minlength="4" class="form-control" id="login" placeholder="login" required>	
@@ -31,7 +31,12 @@
 					<input type="password" name="password" minlength="4" class="form-control" placeholder="password" required>
 				</div>
 				<div class="form-group">
-					<input type="submit" class="btn btn-default float-right" id="submit" value="Подтвердить" disabled>
+				<a href="/login" style="
+					    vertical-align: top;
+					    color: gray;
+					    font-size: 12px;
+					">Вход</a>
+					<input type="submit" class="btn btn-default float-right" id="submit" value="Зарегистрироваться" disabled style="margin-top:7px;">
 				</div>
 			</form>
 		</div>

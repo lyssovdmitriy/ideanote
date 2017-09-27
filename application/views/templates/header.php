@@ -16,30 +16,22 @@
 
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a href="" class="nav-link btn btn-light" onclick="getPads(); return false;">Блокноты</a>
+        <a href="" class="nav-link" onclick="getPads(); return false;">Блокноты</a>
       </li>
-
-      <li class="nav-item">
-        <a 
-        	class="nav-link btn btn-light" 
-        	href="/ajax/editor/new" 
-        	id="new-btn" 
-        	data-action="edit" 
-        	>Создать</a>
-		  </li>
 
 		  <li class="nav-item">
         <a 
-        	class="nav-link btn  btn-light" 
+        	class="nav-link" 
         	href="/ajax/editor" 
         	id="edit-btn" 
         	data-action="edit" 
+          style=" margin-left: 65px;" 
         	>Редактировать</a>
 		  </li>
 
 		  <li class="nav-item">
         <a 
-        	class="nav-link btn btn-default" 
+        	class="nav-link" 
         	href="/ajax/delete" 
         	id="del-btn" 
         	data-action="delete" 
@@ -48,26 +40,28 @@
 
       <li class="nav-item">
         <a 
-        	class="nav-link btn  btn-light" 
+        	class="nav-link" 
         	href="/ajax/note" 
         	id="cancel-btn" 
         	data-action="cancel"
-        	style="display:none" 
+        	style="display:none; margin-left: 55px;" 
         	>Отменить</a>
       </li>
       <li class="nav-item">
         <a 
-        	class="nav-link btn  btn-light" 
+        	class="nav-link" 
         	href="/ajax/save" 
         	id="save-btn" 
         	data-action="save" 
         	style="display:none"       	
         	>Сохранить</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item"
+          style="float:right" 
+      >
         <a 
-        	class="nav-link btn  btn-default" 
-        	href="/login/out" 
+          class="nav-link" 
+          href="/login/out" 
         	>Выход</a>
       </li>
     </ul>

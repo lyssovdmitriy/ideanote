@@ -30,7 +30,12 @@
 					<input type="password" name="password" class="form-control" placeholder="password">
 				</div>
 				<div class="form-group">
-					<input type="submit" class="btn btn-default float-right">
+					<a href="/login/registration" style="
+					    vertical-align: top;
+					    color: gray;
+					    font-size: 12px;
+					">Регистрация</a>
+					<input type="submit" class="btn btn-default float-right" style="margin-top:7px;" value="Войти">
 				</div>
 			</form>
 		</div>

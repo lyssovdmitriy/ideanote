@@ -40,6 +40,12 @@
 		margin-top:1px;
 	}
 
+	#note-title{
+		border-left: none;
+		border-right: none;
+		border-radius: 0;
+	}
+
 	#edit-form h6{
     margin: 15px;
     margin-bottom: 10px;
@@ -54,7 +60,10 @@
 	}
 
 	#note-content{
-		padding:20px;
+		padding:10px;
+		border-left: none;
+		border-right: none;
+		border-radius: 0;
 	}
 
 	.wrap-login{
@@ -168,10 +177,8 @@ blockquote{
     right: 0;
     height: 24px;
     background-color: #ffffff;
-    border: 1px solid #d0e8ff;
-    border-radius: 0 0 0 3px;
+    border-radius: 0 0 0 2px;
     top: 0;
-    /* padding-top: 5px; */
     width: 38px;
     vertical-align: middle;
 }
@@ -197,9 +204,6 @@ blockquote{
     width: 0;
 }
 
-.pad_menu_full.active{
-    /*border: 1px solid #d0e8ff;	*/
-}
 
 
 .pad_menu_full>div {
@@ -219,13 +223,79 @@ blockquote{
 	background-color: red;
 }
 
+.pad_menu_full.active{
+    /*border: 1px solid #d0e8ff;	*/
+}
 
 div.circle{
-    border: 1px solid #ccc;
     border-radius: 50px;
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     background-color: #464a4e;
-    margin-left: 1px;
-    margin-right: 1px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+
+.note_menu {
+   display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    height: 24px;
+    background-color: #ffffff;
+    border-radius: 0 0 0 2px;
+    top: 0;
+    width: 38px;
+    vertical-align: middle;
+}
+
+.note_menu:hover{
+	background-color: #d0e8ff;
+}
+
+.note_menu_full {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    background-color: #ffffff;
+    top: 0;
+    width: 100px;
+    vertical-align: middle;
+    overflow: hidden;
+    width: 0;
+}
+
+
+
+.note_menu_full>div {
+    font-size: 12px;
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.note_menu_full>div.change:hover{
+	background-color: green;
+}
+
+.note_menu_full>div.del:hover{
+	background-color: red;
+}
+
+ul.navbar-nav{
+	display:block;
+	width: 100%;
+
+}
+
+li.nav-item{
+	display: inline-block;
 }
